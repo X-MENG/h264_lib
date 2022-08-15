@@ -1,5 +1,5 @@
 [package]
-name = "testH264"
+name = "h264_lib"
 version = "0.1.0"
 edition = "2021"
 
@@ -12,3 +12,14 @@ openh264 = "0.2.15"
 
 [dev-dependencies]
 env_logger = "0.9"
+
+[lib]
+crate-type = ["staticlib"]  #静态库
+
+#非常重要：必须要对panic进行标注，否则会出现问题
+[profile.release]
+panic="abort"  
+
+#非常重要：必须要对panic进行标注，否则会出现问题
+[profile.dev]
+panic="abort"
