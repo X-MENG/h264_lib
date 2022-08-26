@@ -1,19 +1,17 @@
 use std::path::Path;
 
 fn main() {
-    let base_path = Path::new("depends/rtmpdump-2.3/librtmp");
-    let source_files = ["rtmp.c", "log.c", "amf.c", "hashswf.c", "parseurl.c"];
+    let base_path = Path::new("depends/simplest_librtmp_send264");
+    let source_files = ["librtmp_send264.cpp"];
 
     let mut build = cc::Build::new();
 
     for f in source_files {
         build.file(base_path.join(Path::new(f)));
     }
-    build.define("NO_CRYPTO", "");
     build.warnings(false);
 
-    #[cfg(target_os = "macos")]
-    build.include("/opt/homebrew/opt/openssl@1.1/include");
-
-    build.compile("rtmp");
+    build.include("depends/librtmp/include");
+    
+    build.compile("simplest_librtmp_send264");
 }

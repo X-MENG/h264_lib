@@ -5,6 +5,8 @@ use openh264::nal_units;
 use rtmp::channels::channels::ChannelsManager;
 use rtmp::rtmp::RtmpServer;
 
+mod rtmp264;
+
 #[cfg(test)]
 mod tests {
     use openh264::formats::YUVSource;
