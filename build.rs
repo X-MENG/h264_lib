@@ -1,6 +1,9 @@
 use std::path::Path;
 
 fn main() {
+    println!("cargo:rustc-link-search=native=./depends/librtmp/lib");
+    println!("cargo:rustc-link-lib=static=librtmp");
+
     let base_path = Path::new("depends/simplest_librtmp_send264");
     let source_files = ["librtmp_send264.cpp"];
 

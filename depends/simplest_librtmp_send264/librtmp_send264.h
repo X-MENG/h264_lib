@@ -12,6 +12,11 @@
  *
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /**
  * 初始化并连接到服务器
  *
@@ -39,3 +44,6 @@ int RTMP264_Send(int (*read_buffer)(unsigned char *buf, int buf_size));
  */    
 void RTMP264_Close();  
 
+#ifdef __cplusplus
+}
+#endif
