@@ -1,6 +1,7 @@
 use std::ffi::CString;
 use std::os::raw;
-use std::io::{self, Read};
+use std::io::{Read};
+use std::cell::RefCell;
 
 #[derive(Debug)]
 pub enum Error {
@@ -24,14 +25,36 @@ pub fn connect(url: &str) -> std::result::Result<(), Error> {
     Ok(())
 }
 
-#[no_mangle]
-extern "C" fn read_buffer(buf: *const raw::c_char, buf_size: raw::c_int) -> raw::c_int {
-    println!("Hello from Rust!");
-    0
+thread_local! {
+    static S: RefCell<Option<*mut dyn Read>> = RefCell::new(None);
 }
 
-pub fn send<S: Read>(stream: &mut S) -> std::result::Result<(), Error> {
+#[no_mangle]
+extern "C" fn read_buffer(buf: *const raw::c_char, buf_size: raw::c_int) -> raw::c_int {
+    S.with(|f| {
+        let stream = (*f.borrow()).unwrap();
+
+        // stream.read();
+
+        12
+    })
+}
+
+pub fn send<S: Read + 'static>(stream: &mut S) -> std::result::Result<(), Error> {
+    let stream = stream as *mut dyn Read;
+    
+    S.with(|f| {
+        assert!((*f.borrow()).is_none());
+        (*f.borrow_mut()) = Some(stream);
+    });
+    
     let rv = unsafe { RTMP264_Send(read_buffer) };
+
+    S.with(|f| {
+        assert!((*f.borrow()).is_some());
+        (*f.borrow_mut()) = None;
+    });
+    
     if rv != 0 {
         return Err(Error::LibError(rv));
     }
@@ -56,5 +79,7 @@ mod tests {
         let mut buff = Cursor::new(h264_in);
 
         send(&mut buff).unwrap();
+
+        close()
     }
 }
