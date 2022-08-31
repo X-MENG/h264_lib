@@ -86,7 +86,7 @@ mod tests {
             InitSockets();
         }
 
-        connect("baidu.com").unwrap();
+        connect("rtmp://localhost:1935/live").unwrap();
 
         let h264_in = include_bytes!("../data/test-25fps.h264");
         let mut buff = Cursor::new(h264_in);
