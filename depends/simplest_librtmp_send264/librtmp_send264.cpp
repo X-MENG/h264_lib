@@ -89,7 +89,7 @@ int InitSockets()
  *					
  * @成功则返回0 , 失败则返回相应错误代码
  */ 
-inline void CleanupSockets()    
+void CleanupSockets()    
 {    
 	#ifdef WIN32     
 		WSACleanup();    

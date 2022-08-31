@@ -17,6 +17,9 @@ extern "C"
 {
 #endif
 
+int InitSockets();
+void CleanupSockets();
+
 /**
  * 初始化并连接到服务器
  *
