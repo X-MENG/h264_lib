@@ -1,6 +1,6 @@
 module livego
 
-go 1.19
+go 1.18
 
 require (
 	github.com/gwuhaolin/livego v0.0.0-20220331071126-0e247e157de9
@@ -36,3 +36,5 @@ require (
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/satori/go.uuid v1.1.0 => github.com/satori/go.uuid v1.2.0
