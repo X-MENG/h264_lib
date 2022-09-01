@@ -9,8 +9,6 @@ pub enum Error {
 }
 
 extern "C" {
-    fn InitSockets() -> raw::c_int;
-    fn ClearSockets();
     fn RTMP264_Connect(url: *const raw::c_char) -> raw::c_int;
     fn RTMP264_Send(
         read_buffer: unsafe extern "C" fn(
@@ -82,11 +80,7 @@ mod tests {
 
     #[test]
     fn test4() {
-        unsafe {
-            InitSockets();
-        }
-
-        connect("rtmp://localhost:1935/live").unwrap();
+        connect("rtmp://localhost:1935/live/movie").unwrap();
 
         let h264_in = include_bytes!("../data/test-25fps.h264");
         let mut buff = Cursor::new(h264_in);
@@ -94,9 +88,5 @@ mod tests {
         send(&mut buff).unwrap();
 
         close();
-
-        unsafe {
-            ClearSockets();
-        }
     }
 }

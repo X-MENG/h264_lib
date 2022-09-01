@@ -12,6 +12,8 @@
 #pragma comment(lib,"winmm.lib")  
 #endif 
 
+#pragma comment(lib,"librtmp.lib")
+
 // 定义包头长度, RTMP_HEAD_SIZE = 18
 #define RTMP_HEAD_SIZE   (sizeof(RTMPPacket)+RTMP_MAX_HEADER_SIZE)
 
